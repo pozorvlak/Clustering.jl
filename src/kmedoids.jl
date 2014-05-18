@@ -23,10 +23,10 @@ end
 
 function find_clusters(dist, medoids)
     n = size(dist)[1]
-    k = size(medoids)
+    k = size(medoids)[1]
     total_dist = 0.0
 
-    clusters = [[] for i = 1:k]
+    clusters = [Int[] for i = 1:k]
 
     for i = 1:n
         (distance, index) = findmin(dist[medoids,i])
@@ -39,7 +39,7 @@ function find_clusters(dist, medoids)
 end
 
 function new_medoids(dist, clusters)    
-    medoids = []
+    medoids = Int[]
 
     for cluster in clusters
         dist_within_cluster = [sum([dist[i,j] for j in cluster]) for i in cluster]
@@ -51,13 +51,13 @@ function new_medoids(dist, clusters)
 end
 
 function cluster_membership(clusters, n)
-    cluster_membership = zeros(size(dist)[1])
+    assignments = zeros(n)
     for (i, cluster) in clusters
         for object in cluster
-            cluster_membership[object] = i
+            assignments[object] = i
         end
     end
-    cluster_membership
+    assignments
 end
 
 function kmedoids{R <: FloatingPoint}(dist::Matrix{R}, k::Int)
