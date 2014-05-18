@@ -1,5 +1,3 @@
-using Base.range
-
 type KmedoidsResult
     medoids::Vector{Int} #indexes of medoids
     assignments::Vector{Int} #cluster assignments
@@ -26,15 +24,13 @@ end
 function find_clusters(dist, medoids)
     n = size(dist)[1]
     k = size(medoids)
-    clusters = []
-    for i=1:k
-        push!(clusters, [])
-    end
-    total_distance = 0.0
+    total_dist = 0.0
+
+    clusters = [[] for i = 1:10]
 
     for i = 1:n
         (distance, index) = findmin(dist[medoids,i])
-        total_distance += distance
+        total_dist += distance
 
         push!(clusters[index], i) 
     end
