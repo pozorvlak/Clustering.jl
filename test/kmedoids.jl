@@ -4,7 +4,7 @@ using Distance
 using Clustering
 
 
-x = rand(100, 500)
+x = rand(10, 50)
 dist = pairwise(Euclidean(), x)
 
 @test isa(kmedoids(dist, 3), Clustering.KmedoidsResult)

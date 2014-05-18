@@ -1,3 +1,5 @@
+using Base.range
+
 type KmedoidsResult
     medoids::Vector{Int} #indexes of medoids
     assignments::Vector{Int} #cluster assignments
@@ -16,14 +18,18 @@ end
 function initial_medoids(dist, k)
     n = size(dist)[1]
 
-    scores = sort(1:n, by=(j -> mean_dist(dist, j)))
+    scores = sort([1:n], by=(j -> mean_dist(dist, j)))
 
     scores[1:k]
 end
 
 function find_clusters(dist, medoids)
     n = size(dist)[1]
-    clusters = [[] for i = 1:size(medoids)]
+    k = size(medoids)
+    clusters = []
+    for i=1:k
+        push!(clusters, [])
+    end
     total_distance = 0.0
 
     for i = 1:n
@@ -69,6 +75,6 @@ function kmedoids{R <: FloatingPoint}(dist::Matrix{R}, k::Int)
         (total_dist, clusters) = find_clusters(dist, medoids)
     end
     
-    KmedoidsResult(medoids, cluster_membership(clusters, size(dist)[1])
+    KmedoidsResult(medoids, cluster_membership(clusters, size(dist)[1]))
 end
 
