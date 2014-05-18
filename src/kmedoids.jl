@@ -26,7 +26,7 @@ function find_clusters(dist, medoids)
     k = size(medoids)
     total_dist = 0.0
 
-    clusters = [[] for i = 1:10]
+    clusters = [[] for i = 1:k]
 
     for i = 1:n
         (distance, index) = findmin(dist[medoids,i])
