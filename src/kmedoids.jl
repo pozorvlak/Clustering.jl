@@ -39,12 +39,12 @@ function find_clusters(dist, medoids)
 end
 
 function new_medoids(dist, clusters)    
-    medoids = Int[]
+    medoids = zeros(size(clusters)[1])
 
-    for cluster in clusters
+    for (i, cluster) in enumerate(clusters)
         dist_within_cluster = [sum([dist[i,j] for j in cluster]) for i in cluster]
         best = findmin(dist_within_cluster)[2]
-        push!(medoids, best)
+        medoids[i] = best
     end
 
     medoids
